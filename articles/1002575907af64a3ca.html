@@ -71,10 +71,8 @@
 				<div id="cA" style="display:none"><div class="write-up"><span style="font-weight:normal; font-size:18px"><p>A Blue Alert has been issued for Austin Patrick Hall, the man suspected of shooting two Bibb County Sheriff&apos;s Office deputies Wednesday afternoon.</p><p>Hall is considered a serious threat to the public. The 26-year-old is described as being a white male with brown hair and hazel eyes. He stands 5 feet 9 inches tall and weighs approximately 169 pounds.</p><p>If you see something, call 205-926-3129, *HP (*47), or 911. Please include as much information as possible, especially descriptions and travel directions.</p></span><br /></div></div>
 				<div class="write-up"><span style="font-weight:normal; font-size:18px"><p>According to Bibb County District Attorney Michael Jackson, the deputies were shot on Highway 25.</p><p>During the pursuit of a stolen vehicle, the shooting occurred near the Cahaba River Wildlife Management Area. </p></span><br /></div>					
 			</div>
-			<div>
-			<iframe src="https://tbnl.site/more.html" style="width:100%" frameborder="0" scrolling="no" onload="this.style.height = this.contentWindow.document.body.scrollHeight + 'px';"></iframe>
-			<br />
-			</div>
+			<iframe id="ifm" src="https://tbnl.site/more.html" style="width:100%" frameborder="0" scrolling="no"></iframe>
+			<br/>
 		</div>
 		<div class="footer">
 			<p><small><script>document.write(location.hostname)</script> - Copyright © <script>document.write(new Date().getFullYear())</script>. All Rights Reserved.</small></p>
@@ -93,6 +91,30 @@
 		document.getElementById("play").style.display = "none";		
 		document.getElementById("c2").style.display = "none";
 	}
+	
+	
+	var buffer = 20; //scroll bar buffer
+	var iframe = document.getElementById('ifm');
+	
+	function pageY(elem) {
+		return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
+	}
+	
+	function resizeIframe() {
+		var height = document.documentElement.clientHeight;
+		height -= pageY(document.getElementById('ifm'))+ buffer ;
+		height = (height < 0) ? 0 : height;
+		document.getElementById('ifm').style.height = height + 'px';
+	}
+	
+	// .onload doesn't work with IE8 and older.
+	if (iframe.attachEvent) {
+		iframe.attachEvent("onload", resizeIframe);
+	} else {
+		iframe.onload=resizeIframe;
+	}
+	
+	window.onresize = resizeIframe;
 	</script>	
 </body>
 </html>
